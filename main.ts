@@ -10,5 +10,11 @@ import { mkdirSync, writeFileSync } from "node:fs";
 const JOKE =
   "My portfolio is down 90%, but my group chat says we're still early — early for what, the bankruptcy hearing?";
 
+// Hard gate, same rule as the sealed scorer: 1 to 200 characters.
+// Fail loudly instead of shipping an invalid entry.
+if (JOKE.length < 1 || JOKE.length > 200) {
+  throw new Error(`joke must be 1-200 characters, got ${JOKE.length}`);
+}
+
 mkdirSync("output", { recursive: true });
 writeFileSync("output/entry.txt", JOKE, "utf8");
